@@ -1,0 +1,17 @@
+{
+  "name": "web-chat-app",
+  "description": "",
+  "main": "",
+  "authors": [
+    "ismail pekdas <ismailpekdas@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "chat",
+    "node.js"
+  ],
+  "homepage": "https://github.com/korleg/web-chat-app",
+  "dependencies": {
+    "angular": "^1.7.9"
+  }
+}
