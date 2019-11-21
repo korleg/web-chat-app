@@ -102,14 +102,14 @@ list-style-type: none
   background-position: top 12px left 14px;
   border-radius: 50%;
 }
-.container .left .people {
+.tabArea{
   margin-left: -1px;
   border-right: 1px solid var(--light);
   border-left: 1px solid var(--light);
   width: calc(100% + 2px);
   height: calc(76% + 1px);
   overflow:scroll;
-}
+} 
 .container .left .people .person {
   position: relative;
   width: 100%;
@@ -399,6 +399,7 @@ list-style-type: none
 .tab li{
   width: 50%;
   float: left;
+  cursor: pointer;
 }
 .tab li a{
   height:40px;
