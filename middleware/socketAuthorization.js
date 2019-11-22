@@ -4,7 +4,6 @@ const redisStore = require('../helpers/redisStore');
 
 function onAuthorizeSuccess(data, accept){
     console.log('successful connection to socket.io');
-  
     // The accept-callback still allows us to decide whether to
     // accept the connection or not.
     accept(null, true);
