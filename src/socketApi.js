@@ -23,7 +23,7 @@ io.adapter(redisAdapter({
 }));
 
 io.on('connection', socket =>{
-    console.log('User Login:'+socket.request.user.name + ' ' + socket.request.user.surname);
+    console.log('User Login:'+socket.request.user.name);
 
     Users.upsert(socket.request.googleId, socket.request.user);
 
@@ -35,10 +35,13 @@ io.on('connection', socket =>{
     });
 
     socket.on('newRoom', (roomName) => {
-        Rooms.upsert(roomName)
-        Rooms.list(rooms => {
-            io.emit('roomList', (rooms));
-        });
+        console.log(roomName);
+
+        // Rooms.upsert(roomName);
+        
+        // Rooms.list(rooms => {
+        //     io.emit('roomList', (rooms));
+        // });
     });
 
     socket.on('disconnect', () => {

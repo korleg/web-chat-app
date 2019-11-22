@@ -11,7 +11,7 @@ module.exports = new Users();
 Users.prototype.upsert = function(connectionId, meta) {
     this.client.hset(
         'online',
-        meta.googleId,
+        meta._id,
         JSON.stringify({
             connectionId,
             meta,
