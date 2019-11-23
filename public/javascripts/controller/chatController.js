@@ -1,4 +1,12 @@
-app.controller('chatController', ['$scope','chatFactory', ($scope, chatFactory) => {
+app.controller('chatController', ['$scope','chatFactory','userFactory', ($scope, chatFactory, userFactory) => {
+
+   //initialization
+   function init () {
+      userFactory.getUser().then((user) => {
+         $scope.user = user;
+      })
+   }
+   init();
 
    //angular veriables
    $scope.activeTab = 1;
@@ -8,6 +16,9 @@ app.controller('chatController', ['$scope','chatFactory', ($scope, chatFactory) 
    $scope.chatClicked = false;
    $scope.chatName = "";
    $scope.message = "";
+   $scope.messages = [];
+
+   $scope.user = {};
 
    //socket.io event handling.
    const socket = io.connect("http://localhost:3000")
@@ -22,6 +33,7 @@ app.controller('chatController', ['$scope','chatFactory', ($scope, chatFactory) 
          roomId: $scope.roomId  // odaya girildiğinde alınan room bilgisi ile birlikte server'a emit edilir.
       });
       $scope.message = "";
+      console.log($scope.user)
    };
 
    socket.on('roomList', rooms => {
@@ -44,7 +56,8 @@ app.controller('chatController', ['$scope','chatFactory', ($scope, chatFactory) 
       $scope.chatName = room.name;
       $scope.chatClicked= true;
       chatFactory.getMessages(room.id).then( (data) => {
-         console.log(data);
+         $scope.messages[room.id] = data;
+         console.log($scope.messages);
       })
    };
    $scope.changeTab = tab => {
