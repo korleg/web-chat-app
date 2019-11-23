@@ -4,8 +4,10 @@ app.controller('chatController', ['$scope', ($scope) => {
    $scope.activeTab = 1;
    $scope.onlineList = [];
    $scope.roomList = [];
+   $scope.roomId = "";
    $scope.chatClicked = false;
    $scope.chatName = "";
+   $scope.message = "";
 
    //socket.io event handling.
    const socket = io.connect("http://localhost:3000")
@@ -13,6 +15,14 @@ app.controller('chatController', ['$scope', ($scope) => {
       $scope.onlineList = users;
       $scope.$apply();
    });
+
+   $scope.newMessage = () => {
+      socket.emit('newMessage', {
+         message: $scope.message, //clientte fonksiyon tetiklendiğinde gelen mesaj message değişkenine tanımlanır,
+         roomId: $scope.roomId  // odaya girildiğinde alınan room bilgisi ile birlikte server'a emit edilir.
+      });
+      $scope.message = "";
+   };
 
    socket.on('roomList', rooms => {
       $scope.roomList = rooms;
@@ -30,7 +40,8 @@ app.controller('chatController', ['$scope', ($scope) => {
    };
 
    $scope.switchRoom = (room) => {
-      $scope.chatName = room.roomName;
+      $scope.roomId = room.id;
+      $scope.chatName = room.name;
       $scope.chatClicked= true;
    };
    $scope.changeTab = tab => {

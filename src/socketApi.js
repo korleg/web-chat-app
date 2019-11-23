@@ -9,6 +9,7 @@ const socketApi = {
 //libs
 const Users = require('./lib/Users')
 const Rooms = require('./lib/Rooms')
+const Messages = require('./lib/Messages')
 
 
 //socket authorization
@@ -26,7 +27,7 @@ let control=false;
 
     if(control==true)
     {
-        console.log("girmesi lazım");
+        console.log("User Login:" + socket.request.user.name + socket.request.user.surname);
         Users.upsert(socket.request.googleId, socket.request.user);
 
         Users.list(users => {
@@ -34,6 +35,15 @@ let control=false;
         });
         Rooms.list(rooms => {
             io.emit('roomList', (rooms));
+        });
+
+        socket.on('newMessage', (data) => {
+            console.log(data);
+            Messages.upsert({
+                ...data,
+                username: socket.request.user.name,
+                surname: socket.request.user.surname,
+            });
         });
         
         socket.on('newRoom', (roomName) => {
@@ -58,12 +68,9 @@ let control=false;
     }
     else{
         control=  true;
-        console.log("true oldu");
-
     }
    
 });
-console.log("tekrar false oldu.")
 
 module.exports = socketApi;
 
