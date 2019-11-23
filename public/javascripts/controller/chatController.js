@@ -1,4 +1,4 @@
-app.controller('chatController', ['$scope', ($scope) => {
+app.controller('chatController', ['$scope','chatFactory', ($scope, chatFactory) => {
 
    //angular veriables
    $scope.activeTab = 1;
@@ -43,6 +43,9 @@ app.controller('chatController', ['$scope', ($scope) => {
       $scope.roomId = room.id;
       $scope.chatName = room.name;
       $scope.chatClicked= true;
+      chatFactory.getMessages(room.id).then( (data) => {
+         console.log(data);
+      })
    };
    $scope.changeTab = tab => {
       $scope.activeTab = tab;
